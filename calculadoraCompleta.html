@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       .numero{
+        width: 60px;
+        height: 60px ;
+       }
+       .igual{
+        width: 120px;
+        height: 60px;
+       }
+       table{
+            margin: auto;
+        }
+        .color_display{
+            height: 30px;
+            background-color: #000;
+            border: medium #FFF;
+            font: "space Age";
+            color: #0F0;
+            font-size: 18px;
+            text-align: right;
+            padding: 5px;
+        }
+    </style>
+    <script>
+        //funcion para que aparezcan los números por el display, la clase document, llamamos al id display y le pasamos el parametro numero
+        var cifra="";//creo una variable para almacenar los numeros
+        var acumulado=0;//creo una variable para acumular los numeros
+        var sumar=false;
+        var restar=false;
+        var multiplicar=false;
+        var primeraOperacion=true;//declaramos una variable para indicar la 1 operacion
+       
+        function display_numeros(numero){
+            //el valor en el display sera lo almacenado en cifra + el siguiente numero que se pulse. lo que hace concatenar los numeros para que salgan seguidos
+            document.getElementById("display").value=cifra+numero;
+            //reasignamos cifra y le decimos que almacene lo que hay en el display
+            cifra=document.getElementById("display").value;
+
+        }
+//creamos la funcion suma, y al picar al + se reseteara y podremos introducir un número nuevo
+        function suma(){
+            
+            //creamos un condicional para que reste y sume
+            if(restar){
+                acumulado=acumulado-parseInt(cifra);
+
+                document.getElementById("display").value=acumulado;
+            }else{
+            //acumulado es = a lo que almacene + la cifra nueva que se vaya añadiendo. lo parseamos para que no concatene, y lo convierta a número
+            acumulado = acumulado + parseInt(cifra);
+            //en display queda almacenado el valor de acumulado
+            document.getElementById("display").value=acumulado;
+            }
+           
+            cifra="";
+            sumar=true;
+            restar=false;
+            primeraOperacion=false;//indicamos que no es la primera operacion en esta funcion de sumar
+
+            
+        }
+
+        function resta(){
+            
+            if(primeraOperacion==false){//le preguntamos con un if si es false, pero no sera false sera la primera operacion a realizar, sera true y hara lo que
+                //tengamos en else
+
+            if(sumar){
+               
+                acumulado=acumulado+parseInt(cifra);
+
+                document.getElementById("display").value=acumulado;
+            }else{
+                acumulado=acumulado-parseInt(cifra);
+
+                document.getElementById("display").value=acumulado;
+               
+            }
+        }else{
+            
+            acumulado=parseInt(cifra);//acumulado sera igual a o que hay en el display
+            primeraOperacion=false;//y ya le digo que no es la primera operacion
+        }
+            cifra="";//reseteamos
+            sumar=false;//le decimos que suma sea falso, no estot sumando
+            restar=true;//si estoy restando
+        }
+
+        function multiplica(){
+
+            acumulado=acumulado*parseInt(cifra);
+
+            document.getElementById("display").value=acumulado;
+        }
+       
+
+        
+        //creamos una funcion resultado para que funcione la tecla igual y sume los números
+        function resultado(){
+
+            if(sumar){
+                document.getElementById("display").value=acumulado+parseInt(cifra);
+            }else if(restar){
+                document.getElementById("display").value=acumulado-parseInt(cifra);
+            }else if(multiplicar){
+                document.getElementById("display").value=acumulado*parseInt(cifra);
+            }
+            acumulado=parseInt(document.getElementById("display").value);//le decimos que acumulado guarde el valor que hay en el display
+            cifra=0;//reseteamos cifra a 0
+        }
+    </script>
+</head>
+<body>
+    <table width="15%" border="1">
+        <tr>
+        <td colspan="4" align="center">
+        <input name="display" type="text" class="color_display" id="display" size="25"></td>
+    </tr>
+    <tr>
+        <!-- tenemos que llamar a la funcion suma con el evento -->
+        <td width="26%"> <input   name="button"    type="button"   class="numero" id="button"   value="+" onclick="suma()" > </td>
+        <td width="21%"> <input   name="button2"   type="button"   class="numero" id="button2"  value="-" onclick="resta()" > </td>
+        <td width="21%"> <input   name="button3"   type="button"   class="numero" id="button3"  value="*" onclick="multiplica()" > </td>
+        <td width="32%"> <input   name="button4"   type="button"   class="numero" id="button4"  value="/"  > </td>
+    </tr>
+    <tr>
+        <!-- introducimos un onclick y le damos el valor del numero al pulsar -->
+<td> <input name="num7" type="button" class="numero" id="num7" value="7" onclick="display_numeros(7)"> </td>
+<td> <input name="num8" type="button" class="numero" id="num8" value="8" onclick="display_numeros(8)"> </td>
+<td> <input name="num9" type="button" class="numero" id="num9" value="9" onclick="display_numeros(9)"> </td>
+<td> &nbsp; </td>
+
+    </tr>
+    <tr>
+        <td> <input name="num4" type="button" class="numero" id="num4" value="4"  onclick="display_numeros(4)"> </td>
+        <td> <input name="num5" type="button" class="numero" id="num5" value="5"  onclick="display_numeros(5)"> </td>
+        <td> <input name="num6" type="button" class="numero" id="num6" value="6"  onclick="display_numeros(6)" > </td>
+        <td> &nbsp; </td>
+        
+            </tr>
+            <tr>
+                <td> <input name="num1" type="button" class="numero" id="num1" value="1"  onclick="display_numeros(1)"> </td>
+                <td> <input name="num2" type="button" class="numero" id="num2" value="2"  onclick="display_numeros(2)"> </td>
+                <td> <input name="num3" type="button" class="numero" id="num3" value="3"  onclick="display_numeros(3)"> </td>
+                <td> &nbsp; </td>
+                
+                    </tr>
+                    <tr>
+                        <td> <input name="num0" type="button" class="numero" id="num0" value="0"  onclick="display_numeros(0)"> </td>
+                        <td> <input name="button17" type="button" class="numero" id="button17" value=","> </td>
+                        <td colspan="2"> <input name="button12" type="button" class="igual" id="button12" value="=" onclick="resultado()"> </td>
+                        
+                            </tr>
+
+    </table>
+
+    <script>
+        //ponemos al final de todo el programa, para que cuando cargue la calculadora aparezca de inicio el 0.
+        document.getElementById("display").value=0;
+    </script>
+    
+</body>
+</html>
